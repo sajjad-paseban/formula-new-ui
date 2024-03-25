@@ -3,37 +3,43 @@
         <div class="col">
             <div class="alert alert-primary d-flex justify-content-between flex-row-reverse align-items-center" role="alert">
                 <span class="alert-title">
-                    مدیریت کدهای درآمدی
+                    مدیریت متغیر های سیستمی
                 </span>
                 <Button 
                     group="alpha"
                     btn-class="btn btn-secondary"
                     is-link="true"
                     title="ایجاد"
-                    path="/formula/generate"
+                    path="/tool/variable/create"
                 />
             </div>
         </div>
     </div>
+
     <div class="row">
         <div class="col">
-            <Card title="لیست کدهای درآمدی">
-                <IncomeCodesListDatagrid />
+            <Card title="لیست متغیر های سیستمی">
+                <VariablesListDatagrid />
             </Card>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import Button from '@/components/Button.vue';
-import Card from '@/components/Card.vue';
-import IncomeCodesListDatagrid from '@/datagrids/IncomeCodesListDatagrid.vue';
 import { defineComponent } from 'vue'
+import Button from '@/components/Button.vue';
+import VariablesListDatagrid from '@/datagrids/VariablesListDatagrid.vue';
+import Card from '@/components/Card.vue';
 export default defineComponent({
-    name: 'home-view',
-    components: { Button, Card, IncomeCodesListDatagrid }
+    name: 'variable-view',
+    components: {
+    Button,
+    VariablesListDatagrid,
+    Card
+}
 })
 </script>
+
 
 <style lang="scss" scoped>
     .alert-title{
