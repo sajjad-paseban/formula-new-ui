@@ -82,7 +82,6 @@ export default defineComponent({
     },
     methods: {
         confirm(values: any, { resetForm }: any){
-            console.log(1)
             useVariableStore().addVariable({
                 name: this.form.params.name,
                 type: this.form.params.type,

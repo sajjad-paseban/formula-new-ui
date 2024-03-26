@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col">
             <Card title="لیست کدهای درآمدی">
-                <IncomeCodesListDatagrid />
+                <EarningListDatagrid />
             </Card>
         </div>
     </div>
@@ -27,11 +27,11 @@
 <script lang="ts">
 import Button from '@/components/Button.vue';
 import Card from '@/components/Card.vue';
-import IncomeCodesListDatagrid from '@/datagrids/IncomeCodesListDatagrid.vue';
+import EarningListDatagrid from '@/datagrids/EarningListDatagrid.vue';
 import { defineComponent } from 'vue'
 export default defineComponent({
     name: 'home-view',
-    components: { Button, Card, IncomeCodesListDatagrid }
+    components: { Button, Card, EarningListDatagrid }
 })
 </script>
 

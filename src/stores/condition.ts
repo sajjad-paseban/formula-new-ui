@@ -18,6 +18,11 @@ interface ICondition{
 
 export const useConditionStore = defineStore('condition-store', ()=> {
     const process_condition: ICondition[] | any = ref<ICondition[] | any>([])
+    
+    function setNull(){
+        process_condition.value = []
+    }
+
     function addCondition(params: ICondition){
         (process_condition.value as Array<ICondition>).push(params)
     }
@@ -44,6 +49,7 @@ export const useConditionStore = defineStore('condition-store', ()=> {
         removeCondition,
         addStatement,
         removeStatementItem,
-        addBody
+        addBody,
+        setNull
     }
 })

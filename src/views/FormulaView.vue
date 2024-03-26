@@ -6,27 +6,40 @@
             </h3>
             <variable-declaration-partial />
             <all-variable-partial />
-            <ul class="sub-menu">
-                <li>
+            <Form 
+                :validation-schema="form.FormSchema"
+                @submit="save"
+            >
+                <div class="form-group mx-3">
+                    <label for="title">
+                        عنوان کد درآمدی
+                    </label>
+                    <Field name="title" id="title" v-model="form.params.title" class="form-control form-control-sm" />
+                    <ErrorMessage name="title" />
+                </div> 
+                <ul class="sub-menu">
+                    <li>
+    
+                        <Button 
+                            type="submit"
+                            btn-class="btn btn-secondary"
+                            group="alpha"
+                            title="ذخیره"    
+                        />
+    
+                    </li>
+                    <li>
+                        <Button 
+                            type="button"
+                            group="alpha"
+                            btn-class="btn btn-gray"
+                            title="خروج"
+                            @click="exit"
+                        />
+                    </li>
+                </ul>
+            </Form>
 
-                    <Button 
-                        @click="save"
-                        btn-class="btn btn-secondary"
-                        group="alpha"
-                        title="ذخیره"    
-                    />
-
-                </li>
-                <li>
-                    <Button 
-                        is-link="true"
-                        path="/"
-                        group="alpha"
-                        btn-class="btn btn-gray"
-                        title="خروج"
-                    />
-                </li>
-            </ul>
         </section>
         <section class="content">
             
@@ -47,9 +60,11 @@
     import VariableDeclarationPartial from '@/partials/VariableDeclarationPartial.vue';
     import ProcessPartial from '@/partials/ProcessPartial.vue';
     import Button from '@/components/Button.vue';
-import { messages } from '@/helpers/swal';
-import { ToastMessage } from '@/helpers/enums';
-import axios from 'axios';
+    import { messages } from '@/helpers/swal';
+    import { ToastMessage } from '@/helpers/enums';
+    import { store } from '@/services/earning.service';
+    import { ErrorMessage, Field, Form } from 'vee-validate';
+    import * as yup from 'yup'
     export default defineComponent({
         name: 'IndexView',
         components: { 
@@ -57,10 +72,22 @@ import axios from 'axios';
             AllVariablePartial,
             VariableDeclarationPartial,
             ProcessPartial,
-            Button
+            Button,
+            Form,
+            Field,
+            ErrorMessage
         },
         data(){
+            const schema = yup.object({
+                title: yup.string().required('فیلد عنوان کد درآمدی اجباری می باشد')
+            })
             return {
+                form:{
+                    FormSchema: schema,
+                    params:{
+                        title: null
+                    }
+                },
                 response: null,
                 code: ''
             }
@@ -82,20 +109,40 @@ import axios from 'axios';
                     (this.$refs.body as Array<any>)[pos].value
                 )
             },
-            async save(){
+            async save(values: any, { resetForm }: any){
                 const variables = variablesToPhpCode(useVariableStore().variable);
                 const condition = conditionToPhpCode(useConditionStore().process_condition, useVariableStore().variable);
-                let data = new FormData();
                 const code = variables + "\n" + condition
-                this.code = code;
+                
+                this.code = code
 
-                data.append('code', code);
-                try{
-                    const result = await axios.post('http://localhost/back-formula-app/public/api/compiler/run', data).then(res => res)
-                    this.response = result.data
-                }catch(error){
+                const data = {
+                    title: this.form.params.title,
+                    system_type: 1,
+                    variables: JSON.stringify(useVariableStore().variable),
+                    process: JSON.stringify(useConditionStore().process_condition),
+                    Body: code
+                }
+
+                const result = await store(data).then(res => res);
+            
+                if(result.status == 201 || result.status == 200){
+                    messages(ToastMessage.Success)
+
+                    setTimeout(() => {
+                        useConditionStore().setNull()
+                        useVariableStore().setNull()
+                        resetForm()
+                        this.$router.push({path: '/'})
+                    }, 3000)
+                }else{
                     messages(ToastMessage.ServerError)
                 }
+            },
+            exit(){
+                useConditionStore().setNull()
+                useVariableStore().setNull()
+                this.$router.push({path: '/'})
             }
         }
         
@@ -123,6 +170,19 @@ import axios from 'axios';
                 border-bottom: 2px solid rgba($color: #000000, $alpha: 0.1);
             }
             
+            form{
+
+                span{
+                    color: #DF1C44;
+                    font-size: 13px ;
+                }
+
+                label{
+                    font-family: 'vazir';
+                    font-size: 15px;
+                }
+            }
+
             ul.sub-menu{
                 display: flex;
                 list-style: none;

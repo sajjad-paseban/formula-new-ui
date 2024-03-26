@@ -27,7 +27,9 @@ interface IVariableStore{
 export const useVariableStore = defineStore("variable-store", () =>{
     const variable: IVariableStore[] | any = ref<IVariableStore[] | any>([]);
 
-
+    function setNull(){
+        variable.value = []
+    }
     function addVariable(params: IVariableStore){
         variable.value.push(params)
     }
@@ -47,7 +49,8 @@ export const useVariableStore = defineStore("variable-store", () =>{
         variable,
         addVariable,
         removeVariable,
-        setParameter
+        setParameter,
+        setNull
     }
        
 });
