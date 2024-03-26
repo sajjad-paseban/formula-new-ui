@@ -32,7 +32,7 @@
     </div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import { defineComponent } from 'vue'
 import 'vue-good-table-next/dist/vue-good-table-next.css'
 import Swal from 'sweetalert2'
@@ -60,8 +60,8 @@ export default defineComponent({
                 confirmButtonText: 'بله',
             }).then(async result =>  {
                 if(result.isConfirmed){
-                    const ids = this.$refs['variables-list-table'].selectedRows.map((i: any, index: number) =>{
-                        this.rows.map((item: any, idx: number) => {
+                    const ids = this.$refs['variables-list-table'].selectedRows.map((i, index) =>{
+                        this.rows.map((item, idx) => {
                             if(item.id == i.id)
                                 this.rows.splice(idx, 1)
                         })

@@ -105,6 +105,7 @@ export default defineComponent({
             }
             else{
                 this.form.errors = result.data.errors
+                messages(ToastMessage.ServerError)
             }
         }
     }

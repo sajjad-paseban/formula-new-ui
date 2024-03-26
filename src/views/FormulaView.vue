@@ -47,6 +47,9 @@
     import VariableDeclarationPartial from '@/partials/VariableDeclarationPartial.vue';
     import ProcessPartial from '@/partials/ProcessPartial.vue';
     import Button from '@/components/Button.vue';
+import { messages } from '@/helpers/swal';
+import { ToastMessage } from '@/helpers/enums';
+import axios from 'axios';
     export default defineComponent({
         name: 'IndexView',
         components: { 
@@ -79,7 +82,7 @@
                     (this.$refs.body as Array<any>)[pos].value
                 )
             },
-            save(){
+            async save(){
                 const variables = variablesToPhpCode(useVariableStore().variable);
                 const condition = conditionToPhpCode(useConditionStore().process_condition, useVariableStore().variable);
                 let data = new FormData();
@@ -87,13 +90,12 @@
                 this.code = code;
 
                 data.append('code', code);
-
-                fetch('http://localhost/back-formula-app/public/api/compiler/run',{
-                    method: 'POST',
-                    body: data
-                })
-                .then(res => res.json())
-                .then(response => this.response = response)
+                try{
+                    const result = await axios.post('http://localhost/back-formula-app/public/api/compiler/run', data).then(res => res)
+                    this.response = result.data
+                }catch(error){
+                    messages(ToastMessage.ServerError)
+                }
             }
         }
         

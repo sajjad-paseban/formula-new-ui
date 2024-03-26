@@ -10,7 +10,7 @@
 
 <script lang="ts">
     import { defineComponent } from "vue";
-    import VariableForm from '@/forms/VariableForm.vue';
+    import VariableForm from '@/forms/Variable/VariableForm.vue';
     import Card from "@/components/Card.vue";
     
     export default defineComponent({
