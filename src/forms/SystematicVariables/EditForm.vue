@@ -25,6 +25,38 @@
                 </span>
             </div>
             <div class="form-group">
+                <label for="type">
+                    نوع متغیر
+                </label>
+                <Field as="select" v-model="form.fields.type" name="type" id="type" class="form-select">
+                    <option value="0">تابعی</option>
+                    <option value="1">کوئری دیتابیسی</option>
+                </Field>
+                <ErrorMessage name="type" />
+                <span v-if="form.errors?.type">
+                    {{ form.errors?.type[0] }}
+                </span>
+            </div>
+            <div class="form-group" v-show="form.fields.type == 1">
+                <label for="query">
+                    کوئری
+                </label>
+                <CodeEditor 
+                    dir="ltr"
+                    :languages="editor.languages"
+                    theme="atom-one-dark"
+                    width="100%"
+                    font-size="14px"
+                    height="409px"
+                    padding="20px"
+                    v-model="form.fields.query"
+                    @keyup="getContent"
+                ></CodeEditor>
+                <Field hidden v-model="form.fields.query" name="query" id="query"/>
+                <ErrorMessage name="query" />
+            </div>
+            
+            <div class="form-group" v-show="form.fields.type == 0">
                 <label for="body">
                     دیتا متغیر
                 </label>
@@ -34,7 +66,7 @@
                     {{ form.errors?.body[0] }}
                 </span>
             </div>
-            <div class="form-group">
+            <div class="form-group" v-if="form.fields.type == 0">
                 <label for="params">
                     پارامتر های متغیر
                 </label>
@@ -52,6 +84,7 @@
                     {{ form.errors?.information[0] }}
                 </span>
             </div>
+
             
             <Button 
                 title="ثبت"
@@ -65,7 +98,8 @@
     </div>
 </template>
 
-<script lang="ts">
+<script>
+import CodeEditor from "simple-code-editor";
 import { ErrorMessage, Field, Form } from 'vee-validate';
 import { defineComponent } from 'vue'
 import { FormSchema } from './schema'
@@ -80,7 +114,8 @@ export default defineComponent({
         Form,
         Field,
         ErrorMessage,
-        Button
+        Button,
+        CodeEditor
     },
     data(){
         return{
@@ -89,16 +124,23 @@ export default defineComponent({
                 fields: {
                     name: null,
                     key: null,
+                    type: null,
+                    query: "",
                     body: null,
                     params: null,
                     information: null
                 },
                 errors: null
+            },
+            editor:{
+                languages: [['sql', 'Sql']],
+                lineNums: true,
+                wrap: true
             }
         }
     },
     methods:{
-        async handleSubmit(values: any){
+        async handleSubmit(values){
             const params = this.$route.params;
             const result = await edit(values, params.id).then(res => res)
             if(result.status == 200 || result.status == 201){
@@ -108,6 +150,9 @@ export default defineComponent({
             else{
                 this.form.errors = result.data.errors
             }
+        },
+        getContent(event){
+            this.form.fields.body = "$helper->sql_query("+event.target.value+")"
         }
     },
     async mounted(){
@@ -116,6 +161,8 @@ export default defineComponent({
         
         this.form.fields.name = result.data.row.name;
         this.form.fields.key = result.data.row.key;
+        this.form.fields.type = result.data.row.type;
+        this.form.fields.query = result.data.row.query;
         this.form.fields.body = result.data.row.body;
         this.form.fields.params = result.data.row.params;
         this.form.fields.information = result.data.row.information;
