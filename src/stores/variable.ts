@@ -30,6 +30,11 @@ export const useVariableStore = defineStore("variable-store", () =>{
     function setNull(){
         variable.value = []
     }
+
+    function setValue(data: IVariableStore[]){
+        variable.value = data
+    }
+
     function addVariable(params: IVariableStore){
         variable.value.push(params)
     }
@@ -50,7 +55,8 @@ export const useVariableStore = defineStore("variable-store", () =>{
         addVariable,
         removeVariable,
         setParameter,
-        setNull
+        setNull,
+        setValue
     }
        
 });

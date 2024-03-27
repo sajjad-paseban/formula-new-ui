@@ -23,6 +23,10 @@ export const useConditionStore = defineStore('condition-store', ()=> {
         process_condition.value = []
     }
 
+    function setValue(data: ICondition[]){
+        process_condition.value = data
+    }
+
     function addCondition(params: ICondition){
         (process_condition.value as Array<ICondition>).push(params)
     }
@@ -50,6 +54,7 @@ export const useConditionStore = defineStore('condition-store', ()=> {
         addStatement,
         removeStatementItem,
         addBody,
-        setNull
+        setNull,
+        setValue
     }
 })
