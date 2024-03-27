@@ -48,7 +48,7 @@
                         <StatementMenuPartial class="mx-2" :index="index" />
                     </div>
                     <div class="process-card-body">
-                        <textarea @keyup="changeBody(index)" class="form-control" ref="body" name=""></textarea>
+                        <textarea @keyup="changeBody(index)" v-model="value.body" class="form-control" ref="body" name=""></textarea>
                     </div>
                 </div>
         

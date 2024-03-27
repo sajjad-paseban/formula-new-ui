@@ -42,7 +42,7 @@
                             </span>
                             {{ value.nickname }}
                         </label>
-                        <input type="text" class="form-control form-control-sm" @keyup="setParameters(variableIndex, parameterIndex, $event)" :name="value.id" :id="value.id" :title="value.information">
+                        <input type="text" v-model="value.value" class="form-control form-control-sm" @keyup="setParameters(variableIndex, parameterIndex, $event)" :name="value.id" :id="value.id" :title="value.information">
                     </div>
                 </div>
             </div>
