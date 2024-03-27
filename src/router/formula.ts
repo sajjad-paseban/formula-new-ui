@@ -14,7 +14,7 @@ const FormulaRoute: RouteRecordRaw[] = [
         component: FormulaView,
     },
     {
-        path: 'edit',
+        path: 'edit/:id',
         name: 'formula_edit',
         component: FormulaEditView,
     }
