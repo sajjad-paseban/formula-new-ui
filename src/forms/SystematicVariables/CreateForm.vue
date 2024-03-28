@@ -66,13 +66,18 @@
                     {{ form.errors?.body[0] }}
                 </span>
             </div>
-            <div class="form-group" v-if="form.fields.type == 0">
+            <div class="form-group position-relative" v-if="form.fields.type == 0">
+                <button type="button" v-if="!form.fields.params" @click="handleJsonAddition" class="btn btn-sm btn-primary json-btn">
+                    + اضافه کردن JSON
+                </button>
+
                 <label for="params">
                     پارامتر های متغیر
                 </label>
-
-                <Field as="textarea" style="direction: ltr;" v-model="form.fields.params" name="params" id="params" class="form-control" />
-                <ErrorMessage name="params" />
+                <div class="py-2">
+                    <Field as="textarea" style="direction: ltr;" v-model="form.fields.params" name="params" id="params" class="form-control" />
+                    <ErrorMessage name="params" />
+                </div>
             </div>
             <div class="form-group">
                 <label for="information">
@@ -152,6 +157,9 @@ export default defineComponent({
         },
         getContent(event){
             this.form.fields.body = "$helper->sql_query("+event.target.value+")"
+        },
+        handleJsonAddition(){
+            this.form.fields.params = '[{"id": "", "value": null, "nickname": "", "information": ""}]'
         }
     }
 })
@@ -176,6 +184,11 @@ export default defineComponent({
                 color: #DF1C44;
                 font-size: 13px ;
             }
+        }
+
+        .json-btn{
+            position: absolute;
+            left: 0;
         }
     }
 </style>
