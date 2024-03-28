@@ -7,7 +7,7 @@
             <label for="name">
                 نام متغیر
             </label>
-            <Field class="form-control form-control-sm" name="name" id="name" v-model="form.params.name" />   
+            <Field @keypress="checkVariableName" class="form-control form-control-sm" name="name" id="name" v-model="form.params.name" />   
             <ErrorMessage name="name" />
         </div>
        <div class="form-group">
@@ -59,6 +59,7 @@ import { useVariableStore } from "@/stores/variable";
 import Button from "@/components/Button.vue";
 import { ErrorMessage, Field, Form } from "vee-validate";
 import { FormSchema } from "@/forms/Variable/schema";
+import { checkVariableName } from "@/helpers/Base";
 export default defineComponent({
     name: 'VariableForm',
     components: {
@@ -90,7 +91,8 @@ export default defineComponent({
 
             resetForm()
 
-        }
+        },
+        checkVariableName
     },
     async mounted(){
         this.variables = (await getAll().then(res => res)).data

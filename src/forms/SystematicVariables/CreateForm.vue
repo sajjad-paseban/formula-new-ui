@@ -18,7 +18,7 @@
                 <label for="key">
                     کلید متغیر
                 </label>
-                <Field v-model="form.fields.key" name="key" id="key" class="form-control" />
+                <Field @keypress="checkVariableName" v-model="form.fields.key" name="key" id="key" class="form-control" />
                 <ErrorMessage name="key" />
                 <span v-if="form.errors?.key">
                     {{ form.errors?.key[0] }}
@@ -112,6 +112,7 @@ import Button from '@/components/Button.vue';
 import { store } from '@/services/variables.service';
 import { messages } from '@/helpers/swal';
 import { ToastMessage } from '@/helpers/enums';
+import { checkVariableName } from "@/helpers/Base";
 export default defineComponent({
     name: 'systematic-variables-create-form',
     components: {
@@ -157,10 +158,12 @@ export default defineComponent({
         },
         getContent(event){
             this.form.fields.body = "$helper->sql_query("+event.target.value+")"
+            this.form.fields.body = this.form.fields.body.replaceAll(event.target.value, "\""+event.target.value+"\"")
         },
         handleJsonAddition(){
             this.form.fields.params = '[{"id": "", "value": null, "nickname": "", "information": ""}]'
-        }
+        },
+        checkVariableName
     }
 })
 </script>
