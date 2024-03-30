@@ -84,6 +84,10 @@ export default defineComponent({
         return {
             columns: [
                 {
+                    label: 'کد متغیر',
+                    field: 'id',
+                },
+                {
                     label: 'عنوان کد درآمدی',
                     field: 'title',
                 },
