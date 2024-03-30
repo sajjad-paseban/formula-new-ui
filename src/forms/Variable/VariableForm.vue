@@ -7,7 +7,7 @@
             <label for="name">
                 نام متغیر
             </label>
-            <Field @keypress="checkVariableName" class="form-control form-control-sm" name="name" id="name" v-model="form.params.name" />   
+            <Field @keypress="checkVariableName" class="form-control form-control-sm" autocomplete="off" name="name" id="name" v-model="form.params.name" />   
             <ErrorMessage name="name" />
         </div>
        <div class="form-group">
@@ -28,7 +28,7 @@
             <label for="">
                 مقدار متغیر
             </label>
-            <Field class="form-control form-control-sm" v-model="form.params.value" name="value" id="value" />
+            <Field class="form-control form-control-sm" autocomplete="off" v-model="form.params.value" name="value" id="value" />
             <ErrorMessage name="value" />
         </div>
         <div class="form-group" v-if="form.params.type == 1">
