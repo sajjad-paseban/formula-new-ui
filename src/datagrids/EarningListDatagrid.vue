@@ -88,27 +88,43 @@ export default defineComponent({
                     field: 'id',
                 },
                 {
-                    label: 'عنوان کد درآمدی',
-                    field: 'title',
+                    label: 'عنوان',
+                    field: 'formula_earnings.title',
                 },
                 {
-                    label: 'نوع سیستم',
-                    field: 'system_type',
+                    label: 'سال',
+                    field: 'Year',
+                },
+                {
+                    label: 'ردیف درآمدی',
+                    field: 'earningtolltype.Title',
+                },
+                {
+                    label: 'طبقه',
+                    field: 'floortype.Title',
+                },
+                {
+                    label: 'توضیحات',
+                    field: 'Description',
+                },
+                {
+                    label: 'الویت',
+                    field: 'Priority',
                 },
                 {
                     label: 'متغیر ها',
-                    field: 'variables',
+                    field: 'formula_earnings.variables',
                     tdClass: 'ltr'
                     
                 },
                 {
                     label: 'پردازنده',
-                    field: 'process',
+                    field: 'formula_earnings.process',
                     tdClass: 'ltr'
                 },
                 {
                     label: 'کد تولید شده',
-                    field: 'Body',
+                    field: 'formula_earnings.body',
                     tdClass: 'ltr'
                 },
                 {
