@@ -280,7 +280,6 @@
             position: absolute;
             left: 0;
             top: 0;
-            bottom: 0;
             width: calc(100% - 260px);
         }
     }
