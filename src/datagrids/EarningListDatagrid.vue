@@ -112,22 +112,6 @@ export default defineComponent({
                     field: 'Priority',
                 },
                 {
-                    label: 'متغیر ها',
-                    field: 'formula_earnings.variables',
-                    tdClass: 'ltr'
-                    
-                },
-                {
-                    label: 'پردازنده',
-                    field: 'formula_earnings.process',
-                    tdClass: 'ltr'
-                },
-                {
-                    label: 'کد تولید شده',
-                    field: 'formula_earnings.body',
-                    tdClass: 'ltr'
-                },
-                {
                     label: 'عملیات',
                     field: 'actions',
                     html: true
